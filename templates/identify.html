@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>KTÜ CHATAPP</title>
+
+    <body bgcolor="#f0dee1">
+        
+    <center> 
+    <h1>CHAT APP</h1>
+
+    <p style = "font-family:georgia,garamond,serif;font-size:16px;font-style:italic;">
+    <font color="blue"> 
+         Enjoy the experience of meeting different friends !
+    </font>
+    </p>
+    </center>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            $("#choose").submit(function(e) {
+                document.location = $("#uid").val();
+                e.preventDefault();
+            });
+        });
+    </script>
+</head>
+<body>
+    <center> 
+    Your name/nickname :
+    <form id="choose" action="/" method="GET">
+    <input id="uid"></input>
+    <input type="submit" />
+    </form>
+    </center>
+</body>
+</html>

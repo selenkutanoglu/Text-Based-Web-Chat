@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>KTÜ CHATAPP</title>
+
+    <body bgcolor="#f0dee1">
+        
+    <center> 
+    <h1>CHAT APP</h1>
+
+    <p style = "font-family:georgia,garamond,serif;font-size:16px;font-style:italic;">
+    <font color="blue"> 
+         Enjoy the experience of meeting different friends !
+    </font>
+    </p>
+    </center>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+
+            $('#newmessage').submit(function(e) {
+                var message = $("#messageinput").val();
+                $.ajax({
+                    'type'     : 'POST',
+                    'url'      : '/put/{{room}}/{{uid}}',
+                    'data'     : { 'message': message },
+                    'dataType' : 'json',
+                });
+                $("#messageinput").val('');
+                $("#messageinput").focus();
+                e.preventDefault();
+            });
+
+            var longPoll = function() {
+              return $.ajax({
+                type: "POST",
+                url: "/poll/" + "{{uid}}",
+                async: true,
+                cache: false,
+                timeout: 100000,
+                success: function(data) {
+                  if (data.length > 0) {
+                      $("#messages").append($("<li>" + data + "</li>"))
+                  }
+                  return longPoll();
+                },
+                dataType: 'json'
+              });
+            };
+
+            longPoll();
+
+        });
+    </script>
+</head>
+<body>
+    <center>
+    <p>CHAT 💬</p>
+    <p style="text-align:center;">
+    <ul id="messages">
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+    </ul>
+    <form id="newmessage">
+        <input id="messageinput"></input>
+        <input type="submit"/>
+    </form>
+    </p>
+</button>
+</center>
+</body>
+</html>
